@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="TEONS — Independent creative digital agency building brands, digital experiences and visual systems.">
+
+<title>TEONS — Creative Digital Agency</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+<!-- =====================================================
+     CSS START
+===================================================== -->
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#f3f1eb;
+    color:#111;
+    font-family:"Manrope",sans-serif;
+    overflow-x:hidden;
+}
+
+body.menu-open{
+    overflow:hidden;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button{
+    font-family:inherit;
+}
+
+:root{
+    --bg:#f3f1eb;
+    --black:#111;
+    --gray:#686861;
+    --line:rgba(17,17,17,.18);
+    --acid:#c9ff3d;
+    --pad:clamp(20px,4vw,64px);
+}
+
+
+/* ================= CURSOR ================= */
+
+.cursor{
+    position:fixed;
+    width:8px;
+    height:8px;
+    background:#111;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:9999;
+    transform:translate(-50%,-50%);
+}
+
+.cursor-follower{
+    position:fixed;
+    width:36px;
+    height:36px;
+    border:1px solid #111;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:9998;
+    transform:translate(-50%,-50%);
+    transition:width .3s,height .3s;
+}
+
+body.hovering .cursor-follower{
+    width:65px;
+    height:65px;
+}
+
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:90px;
+    padding:0 var(--pad);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    z-index:1000;
+    mix-blend-mode:difference;
+    color:white;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:17px;
+    font-weight:800;
+    letter-spacing:-.04em;
+}
+
+.logo sup{
+    font-size:8px;
+    margin-left:-5px;
+}
+
+.logo-mark{
+    position:relative;
+    width:28px;
+    height:28px;
+    display:block;
+    animation:logoIntro 1s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.logo-bar{
+    position:absolute;
+    width:5px;
+    background:currentColor;
+    border-radius:10px;
+    transform-origin:bottom;
+}
+
+.bar-1{
+    height:17px;
+    left:2px;
+    bottom:2px;
+}
+
+.bar-2{
+    height:23px;
+    left:11px;
+    bottom:2px;
+}
+
+.bar-3{
+    height:13px;
+    right:2px;
+    bottom:2px;
+}
+
+.logo-dot{
+    position:absolute;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--acid);
+    top:1px;
+    right:1px;
+}
+
+.logo-word{
+    animation:logoWordIntro .8s .35s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes logoIntro{
+    from{
+        opacity:0;
+        transform:rotate(-25deg) scale(.6);
+    }
+
+    to{
+        opacity:1;
+        transform:rotate(0) scale(1);
+    }
+}
+
+@keyframes logoWordIntro{
+    from{
+        opacity:0;
+        transform:translateX(-15px);
+        letter-spacing:.2em;
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+        letter-spacing:-.04em;
+    }
+}
+
+
+/* ================= DESKTOP NAV ================= */
+
+.desktop-nav{
+    display:flex;
+    align-items:center;
+    gap:32px;
+    font-size:12px;
+    font-family:"DM Mono",monospace;
+    text-transform:uppercase;
+}
+
+.desktop-nav a{
+    position:relative;
+}
+
+.desktop-nav a:not(.nav-cta)::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-5px;
+    width:0;
+    height:1px;
+    background:currentColor;
+    transition:width .3s;
+}
+
+.desktop-nav a:not(.nav-cta):hover::after{
+    width:100%;
+}
+
+.nav-cta{
+    border:1px solid currentColor;
+    padding:11px 17px;
+    border-radius:100px;
+}
+
+.nav-cta:hover{
+    background:white;
+    color:#111;
+}
+
+
+/* ================= MOBILE MENU ================= */
+
+.menu-button{
+    display:none;
+    border:0;
+    background:none;
+    width:35px;
+    height:35px;
+    position:relative;
+}
+
+.menu-button span{
+    position:absolute;
+    left:5px;
+    width:25px;
+    height:1px;
+    background:white;
+}
+
+.menu-button span:first-child{
+    top:13px;
+}
+
+.menu-button span:last-child{
+    top:20px;
+}
+
+.mobile-menu{
+    position:fixed;
+    inset:0;
+    background:#111;
+    color:white;
+    z-index:900;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:130px var(--pad) 35px;
+    transform:translateY(-100%);
+    transition:transform .7s cubic-bezier(.77,0,.175,1);
+}
+
+.mobile-menu.active{
+    transform:translateY(0);
+}
+
+.mobile-links{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.mobile-links a{
+    font-size:clamp(50px,13vw,100px);
+    font-weight:700;
+    letter-spacing:-.07em;
+}
+
+.mobile-bottom{
+    display:flex;
+    justify-content:space-between;
+    font-family:"DM Mono",monospace;
+    font-size:10px;
+}
+
+
+/* ================= COMMON ================= */
+
+.section{
+    padding:130px var(--pad);
+}
+
+.section-number{
+    font-family:"DM Mono",monospace;
+    font-size:10px;
+    letter-spacing:.08em;
+    color:var(--gray);
+}
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px solid var(--line);
+    padding-bottom:20px;
+    margin-bottom:60px;
+    font-family:"DM Mono",monospace;
+    font-size:10px;
+}
+
+
+/* ================= HERO ================= */
+
+.hero{
+    min-height:100vh;
+    padding:150px var(--pad) 50px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.hero-top{
+    display:flex;
+    justify-content:space-between;
+    font-family:"DM Mono",monospace;
+    font-size:9px;
+    letter-spacing:.08em;
+}
+
+.hero-title h1{
+    font-size:clamp(65px,12.7vw,190px);
+    line-height:.83;
+    letter-spacing:-.085em;
+    font-weight:700;
+    max-width:1500px;
+}
+
+.hero-title h1 span{
+    display:block;
+    margin-left:13vw;
+    font-style:italic;
+    font-weight:400;
+}
+
+.hero-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+}
+
+.hero-bottom p{
+    width:350px;
+    max-width:45%;
+    font-size:14px;
+    line-height:1.5;
+    color:var(--gray);
+}
+
+.circle-link{
+    width:90px;
+    height:90px;
+    border:1px solid var(--line);
+    border-radius:50%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    font-family:"DM Mono",monospace;
+    font-size:8px;
+    gap:7px;
+}
+
+.circle-link:hover{
+    background:#111;
+    color:white;
+}
+
+
+/* ================= TICKER ================= */
+
+.ticker{
+    overflow:hidden;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:18px 0;
+    white-space:nowrap;
+}
+
+.ticker-track{
+    display:flex;
+    align-items:center;
+    gap:28px;
+    width:max-content;
+    animation:tickerMove 25s linear infinite;
+}
+
+.ticker span{
+    font-size:13px;
+    font-weight:600;
+}
+
+.ticker b{
+    font-weight:400;
+    color:var(--gray);
+}
+
+@keyframes tickerMove{
+    from{
+        transform:translateX(0);
+    }
+
+    to{
+        transform:translateX(-50%);
+    }
+}
+
+
+/* ================= INTRO ================= */
+
+.intro{
+    min-height:80vh;
+}
+
+.intro-content{
+    margin-top:100px;
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:100px;
+}
+
+.intro h2{
+    font-size:clamp(50px,8vw,120px);
+    line-height:.9;
+    letter-spacing:-.075em;
+}
+
+.intro h2 em{
+    font-style:italic;
+    font-weight:400;
+}
+
+.intro-description{
+    padding-top:15px;
+}
+
+.intro-description p{
+    color:var(--gray);
+    font-size:15px;
+    line-height:1.6;
+    max-width:330px;
+}
+
+.text-link{
+    display:inline-block;
+    margin-top:35px;
+    font-family:"DM Mono",monospace;
+    font-size:11px;
+    border-bottom:1px solid;
+    padding-bottom:5px;
+}
+
+
+/* ================= WORK ================= */
+
+.work-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:90px 25px;
+}
+
+.project-large,
+.project-wide{
+    grid-column:span 2;
+}
+
+.project-image{
+    position:relative;
+    height:580px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:transform .7s cubic-bezier(.2,.8,.2,1);
+}
+
+.project-large .project-image{
+    height:700px;
+}
+
+.project-wide .project-image{
+    height:650px;
+}
+
+.project:hover .project-image{
+    transform:scale(.97);
+}
+
+.project-a{
+    background:#171717;
+    color:white;
+}
+
+.shape-one{
+    width:340px;
+    height:340px;
+    border-radius:50%;
+    border:1px solid #fff;
+    box-shadow:
+        0 0 0 40px rgba(255,255,255,.05),
+        0 0 0 80px rgba(255,255,255,.025);
+}
+
+.project-label{
+    position:absolute;
+    font-size:clamp(70px,12vw,170px);
+    font-weight:700;
+    letter-spacing:-.08em;
+    opacity:.9;
+}
+
+.project-b{
+    background:var(--acid);
+}
+
+.orb{
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    background:#111;
+    box-shadow:40px -35px 0 rgba(255,255,255,.5);
+}
+
+.project-c{
+    background:#deddd6;
+}
+
+.grid-lines{
+    width:80%;
+    height:80%;
+    background-image:
+        linear-gradient(rgba(0,0,0,.12) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,0,0,.12) 1px,transparent 1px);
+    background-size:35px 35px;
+}
+
+.project-d{
+    background:#b6c3bd;
+}
+
+.circle-outline{
+    width:450px;
+    height:450px;
+    border:2px solid #111;
+    border-radius:50%;
+}
+
+.project-info{
+    display:flex;
+    justify-content:space-between;
+    padding-top:18px;
+}
+
+.project-info h3{
+    font-size:17px;
+}
+
+.project-info p{
+    color:var(--gray);
+    font-family:"DM Mono",monospace;
+    font-size:9px;
+    margin-top:5px;
+    text-transform:uppercase;
+}
+
+.project-info>span{
+    font-family:"DM Mono",monospace;
+    font-size:10px;
+}
+
+
+/* ================= STATEMENT ================= */
+
+.statement{
+    min-height:90vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.statement-text{
+    font-size:clamp(55px,10vw,150px);
+    line-height:.82;
+    letter-spacing:-.08em;
+}
+
+.statement-text p{
+    margin-bottom:15px;
+}
+
+.statement-text span{
+    font-style:italic;
+    font-weight:400;
+}
+
+
+/* ================= SERVICES ================= */
+
+.service-list{
+    border-top:1px solid var(--line);
+}
+
+.service{
+    display:grid;
+    grid-template-columns:70px 1fr 1.2fr 50px;
+    gap:30px;
+    align-items:center;
+    padding:35px 0;
+    border-bottom:1px solid var(--line);
+    transition:padding .4s;
+}
+
+.service:hover{
+    padding-left:20px;
+    padding-right:20px;
+    background:rgba(0,0,0,.025);
+}
+
+.service-number{
+    font-family:"DM Mono",monospace;
+    font-size:10px;
+}
+
+.service h3{
+    font-size:clamp(25px,3vw,48px);
+    letter-spacing:-.05em;
+}
+
+.service p{
+    max-width:350px;
+    color:var(--gray);
+    font-size:13px;
+    line-height:1.5;
+}
+
+.service-arrow{
+    font-size:25px;
+}
+
+
+/* ================= CREATIVE LAB ================= */
+
+.lab{
+    background:#111;
+    color:white;
+}
+
+.lab .section-number{
+    color:#888;
+}
+
+.lab-wrapper{
+    min-height:750px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    gap:80px;
+}
+
+.lab-title>span{
+    font-family:"DM Mono",monospace;
+    font-size:10px;
+}
+
+.lab-title h2{
+    margin-top:40px;
+    font-size:clamp(55px,8vw,120px);
+    line-height:.85;
+    letter-spacing:-.08em;
+}
+
+.lab-art{
+    position:relative;
+    height:600px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.lab-circle{
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    border:1px solid white;
+    animation:spin 15s linear infinite;
+}
+
+.lab-square{
+    position:absolute;
+    width:150px;
+    height:150px;
+    background:var(--acid);
+    mix-blend-mode:difference;
+    animation:float 5s ease-in-out infinite;
+}
+
+.lab-line{
+    position:absolute;
+    width:100%;
+    height:1px;
+    background:white;
+    transform:rotate(-45deg);
+}
+
+.lab-word{
+    position:absolute;
+    font-size:100px;
+    font-weight:700;
+    letter-spacing:-.08em;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translate(0,0) rotate(0);
+    }
+
+    50%{
+        transform:translate(70px,-60px) rotate(45deg);
+    }
+}
+
+
+/* ================= ABOUT ================= */
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:120px;
+    margin-top:80px;
+}
+
+.about-grid h2{
+    font-size:clamp(55px,8vw,120px);
+    line-height:.85;
+    letter-spacing:-.08em;
+}
+
+.about-grid h2 em{
+    font-style:italic;
+    font-weight:400;
+}
+
+.about-copy{
+    padding-top:15px;
+}
+
+.about-copy p{
+    color:var(--gray);
+    line-height:1.7;
+    margin-bottom:25px;
+    max-width:450px;
+}
+
+.stats{
+    margin-top:150px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--line);
+}
+
+.stat{
+    padding:35px 20px 35px 0;
+    border-right:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.stat:not(:first-child){
+    padding-left:20px;
+}
+
+.stat strong{
+    font-size:clamp(35px,4vw,60px);
+    letter-spacing:-.06em;
+}
+
+.stat span{
+    font-family:"DM Mono",monospace;
+    font-size:9px;
+    line-height:1.5;
+    color:var(--gray);
+}
+
+
+/* ================= CONTACT ================= */
+
+.contact{
+    min-height:90vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.contact-content{
+    display:flex;
+    flex-direction:column;
+}
+
+.contact-content>span{
+    font-family:"DM Mono",monospace;
+    font-size:10px;
+    margin-bottom:30px;
+}
+
+.contact h2{
+    font-size:clamp(70px,13vw,200px);
+    line-height:.78;
+    letter-spacing:-.09em;
+}
+
+.contact h2 em{
+    font-weight:400;
+    font-style:italic;
+}
+
+.contact-email{
+    align-self:flex-end;
+    margin-top:80px;
+    font-family:"DM Mono",monospace;
+    font-size:clamp(14px,2vw,25px);
+    border-bottom:1px solid;
+    padding-bottom:8px;
+}
+
+.contact-email span{
+    margin-left:20px;
+}
+
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#111;
+    color:white;
+    padding:70px var(--pad) 30px;
+}
+
+.footer-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    padding-bottom:120px;
+}
+
+.footer-logo{
+    font-size:clamp(80px,15vw,220px);
+    font-weight:800;
+    letter-spacing:-.09em;
+}
+
+.footer-logo span{
+    font-size:15px;
+    vertical-align:top;
+}
+
+.footer-top p{
+    max-width:260px;
+    color:#999;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.footer-bottom{
+    border-top:1px solid #333;
+    padding-top:20px;
+    display:flex;
+    justify-content:space-between;
+    font-family:"DM Mono",monospace;
+    font-size:9px;
+    color:#888;
+}
+
+.footer-bottom div{
+    display:flex;
+    gap:25px;
+}
+
+.footer-bottom a:hover{
+    color:white;
+}
+
+
+/* ================= REVEAL ================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(60px);
+    transition:
+        opacity .9s ease,
+        transform .9s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:800px){
+
+    .navbar{
+        height:75px;
+    }
+
+    .desktop-nav{
+        display:none;
+    }
+
+    .menu-button{
+        display:block;
+    }
+
+    .cursor,
+    .cursor-follower{
+        display:none;
+    }
+
+    .hero{
+        min-height:90vh;
+        padding-top:130px;
+    }
+
+    .hero-top{
+        flex-direction:column;
+        gap:8px;
+    }
+
+    .hero-title h1{
+        font-size:clamp(55px,17vw,100px);
+    }
+
+    .hero-title h1 span{
+        margin-left:8vw;
+    }
+
+    .hero-bottom p{
+        max-width:70%;
+        font-size:12px;
+    }
+
+    .circle-link{
+        width:65px;
+        height:65px;
+        flex-shrink:0;
+    }
+
+    .section{
+        padding:90px var(--pad);
+    }
+
+    .intro-content{
+        margin-top:60px;
+        grid-template-columns:1fr;
+        gap:45px;
+    }
+
+    .intro h2{
+        font-size:clamp(48px,13vw,85px);
+    }
+
+    .work-grid{
+        grid-template-columns:1fr;
+        gap:60px;
+    }
+
+    .project-large,
+    .project-wide{
+        grid-column:span 1;
+    }
+
+    .project-image,
+    .project-large .project-image,
+    .project-wide .project-image{
+        height:430px;
+    }
+
+    .project-label{
+        font-size:75px;
+    }
+
+    .statement{
+        min-height:70vh;
+    }
+
+    .statement-text{
+        font-size:clamp(50px,14vw,90px);
+    }
+
+    .service{
+        grid-template-columns:35px 1fr 30px;
+        gap:10px;
+        padding:25px 0;
+    }
+
+    .service p{
+        display:none;
+    }
+
+    .service h3{
+        font-size:25px;
+    }
+
+    .lab-wrapper{
+        grid-template-columns:1fr;
+        min-height:auto;
+        gap:50px;
+    }
+
+    .lab-art{
+        height:400px;
+    }
+
+    .lab-word{
+        font-size:70px;
+    }
+
+    .about-grid{
+        grid-template-columns:1fr;
+        gap:50px;
+        margin-top:60px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+        margin-top:80px;
+    }
+
+    .stat{
+        border-bottom:1px solid var(--line);
+    }
+
+    .stat:nth-child(2){
+        border-right:0;
+    }
+
+    .contact{
+        min-height:75vh;
+    }
+
+    .contact h2{
+        font-size:clamp(65px,17vw,110px);
+    }
+
+    .contact-email{
+        align-self:flex-start;
+        margin-top:50px;
+    }
+
+    .footer-top{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:30px;
+        padding-bottom:70px;
+    }
+
+    .footer-logo{
+        font-size:90px;
+    }
+
+    .footer-bottom{
+        flex-direction:column;
+        gap:20px;
+    }
+}
+
+
+/* ================= REDUCED MOTION ================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        scroll-behavior:auto!important;
+        transition-duration:.01ms!important;
+    }
+
+}
+
+</style>
+
+<!-- =====================================================
+     CSS END
+===================================================== -->
+
+</head>
+
+
+<body>
+
+<!-- ================= CUSTOM CURSOR ================= -->
+
+<div class="cursor"></div>
+<div class="cursor-follower"></div>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <a href="#home" class="logo magnetic" aria-label="TEONS home">
+
+        <span class="logo-mark" aria-hidden="true">
+
+            <span class="logo-bar bar-1"></span>
+            <span class="logo-bar bar-2"></span>
+            <span class="logo-bar bar-3"></span>
+
+            <span class="logo-dot"></span>
+
+        </span>
+
+        <span class="logo-word">TEONS</span>
+
+        <sup>®</sup>
+
+    </a>
+
+
+    <nav class="desktop-nav">
+
+        <a href="#work" class="magnetic">Work</a>
+
+        <a href="#services" class="magnetic">Services</a>
+
+        <a href="#about" class="magnetic">About</a>
+
+        <a href="#contact" class="nav-cta magnetic">
+            Start a project
+        </a>
+
+    </nav>
+
+
+    <button class="menu-button" aria-label="Open menu">
+
+        <span></span>
+        <span></span>
+
+    </button>
+
+</header>
+
+
+<!-- ================= MOBILE MENU ================= -->
+
+<div class="mobile-menu">
+
+    <div class="mobile-links">
+
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+
+    </div>
+
+    <div class="mobile-bottom">
+
+        <span>INDIA</span>
+        <span>© 2026 TEONS</span>
+
+    </div>
+
+</div>
+
+
+<!-- ================= MAIN ================= -->
+
+<main id="home">
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-top">
+
+        <span>INDEPENDENT CREATIVE AGENCY</span>
+
+        <span>BASED IN INDIA / WORKING WORLDWIDE</span>
+
+    </div>
+
+
+    <div class="hero-title">
+
+        <h1>
+
+            WE MAKE
+            <span>IDEAS</span>
+            VISIBLE.
+
+        </h1>
+
+    </div>
+
+
+    <div class="hero-bottom">
+
+        <p>
+            TEONS is a creative digital agency building brands,
+            identities and digital experiences for ambitious ideas.
+        </p>
+
+
+        <a href="#work" class="circle-link magnetic">
+
+            <span>SCROLL</span>
+            <span class="arrow">↓</span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= TICKER ================= -->
+
+<section class="ticker">
+
+    <div class="ticker-track">
+
+        <span>BRAND</span>
+        <b>×</b>
+
+        <span>DIGITAL</span>
+        <b>×</b>
+
+        <span>MOTION</span>
+        <b>×</b>
+
+        <span>STRATEGY</span>
+        <b>×</b>
+
+        <span>ART DIRECTION</span>
+        <b>×</b>
+
+        <span>BRAND</span>
+        <b>×</b>
+
+        <span>DIGITAL</span>
+        <b>×</b>
+
+        <span>MOTION</span>
+        <b>×</b>
+
+        <span>STRATEGY</span>
+        <b>×</b>
+
+    </div>
+
+</section>
+
+
+<!-- ================= INTRO ================= -->
+
+<section class="intro section">
+
+    <div class="section-number">
+        01 / INTRO
+    </div>
+
+
+    <div class="intro-content reveal">
+
+        <h2>
+            WE TURN
+            <em>THOUGHTS</em>
+            INTO VISUAL
+            <em>LANGUAGE.</em>
+        </h2>
+
+
+        <div class="intro-description">
+
+            <p>
+                From a first idea to a complete visual ecosystem,
+                TEONS creates meaningful design that people remember.
+            </p>
+
+            <a href="#services" class="text-link">
+                Explore what we do →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= WORK ================= -->
+
+<section id="work" class="work section">
+
+    <div class="section-header">
+
+        <div class="section-number">
+            02 / SELECTED WORK
+        </div>
+
+        <span>2024 — 2026</span>
+
+    </div>
+
+
+    <div class="work-grid">
+
+
+        <article class="project project-large reveal">
+
+            <div class="project-image project-a">
+
+                <div class="shape-one"></div>
+
+                <span class="project-label">
+                    AURA
+                </span>
+
+            </div>
+
+
+            <div class="project-info">
+
+                <div>
+
+                    <h3>AURA</h3>
+
+                    <p>
+                        Brand Identity / Art Direction
+                    </p>
+
+                </div>
+
+                <span>01</span>
+
+            </div>
+
+        </article>
+
+
+        <article class="project reveal">
+
+            <div class="project-image project-b">
+
+                <div class="orb"></div>
+
+                <span class="project-label">
+                    NOVA
+                </span>
+
+            </div>
+
+
+            <div class="project-info">
+
+                <div>
+
+                    <h3>NOVA</h3>
+
+                    <p>
+                        Digital Experience
+                    </p>
+
+                </div>
+
+                <span>02</span>
+
+            </div>
+
+        </article>
+
+
+        <article class="project reveal">
+
+            <div class="project-image project-c">
+
+                <div class="grid-lines"></div>
+
+                <span class="project-label">
+                    FORM
+                </span>
+
+            </div>
+
+
+            <div class="project-info">
+
+                <div>
+
+                    <h3>FORM</h3>
+
+                    <p>
+                        Packaging / Campaign
+                    </p>
+
+                </div>
+
+                <span>03</span>
+
+            </div>
+
+        </article>
+
+
+        <article class="project project-wide reveal">
+
+            <div class="project-image project-d">
+
+                <div class="circle-outline"></div>
+
+                <span class="project-label">
+                    SHIFT
+                </span>
+
+            </div>
+
+
+            <div class="project-info">
+
+                <div>
+
+                    <h3>SHIFT</h3>
+
+                    <p>
+                        Social / Motion / Campaign
+                    </p>
+
+                </div>
+
+                <span>04</span>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+<!-- ================= PHILOSOPHY ================= -->
+
+<section class="statement section">
+
+    <div class="section-number">
+        03 / PHILOSOPHY
+    </div>
+
+
+    <div class="statement-text reveal">
+
+        <p>
+            GOOD DESIGN
+            <span>ISN'T</span>
+            DECORATION.
+        </p>
+
+        <p>
+            IT'S
+            <span>DIRECTION.</span>
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SERVICES ================= -->
+
+<section id="services" class="services section">
+
+    <div class="section-header">
+
+        <div class="section-number">
+            04 / WHAT WE DO
+        </div>
+
+        <span>SERVICES</span>
+
+    </div>
+
+
+    <div class="service-list">
+
+
+        <div class="service reveal">
+
+            <span class="service-number">01</span>
+
+            <h3>Brand Identity</h3>
+
+            <p>
+                Strategy, naming, logo systems, typography,
+                colour and complete visual identity.
+            </p>
+
+            <span class="service-arrow">↗</span>
+
+        </div>
+
+
+        <div class="service reveal">
+
+            <span class="service-number">02</span>
+
+            <h3>Social & Campaigns</h3>
+
+            <p>
+                Social media systems, campaign concepts,
+                creative direction and visual storytelling.
+            </p>
+
+            <span class="service-arrow">↗</span>
+
+        </div>
+
+
+        <div class="service reveal">
+
+            <span class="service-number">03</span>
+
+            <h3>Digital Experiences</h3>
+
+            <p>
+                Websites, landing pages, interactive experiences
+                and digital art direction.
+            </p>
+
+            <span class="service-arrow">↗</span>
+
+        </div>
+
+
+        <div class="service reveal">
+
+            <span class="service-number">04</span>
+
+            <h3>Motion & Visuals</h3>
+
+            <p>
+                Motion graphics, animated identities,
+                visual systems and campaign assets.
+            </p>
+
+            <span class="service-arrow">↗</span>
+
+        </div>
+
+
+        <div class="service reveal">
+
+            <span class="service-number">05</span>
+
+            <h3>Art Direction</h3>
+
+            <p>
+                Concept development, photography direction,
+                styling and creative systems.
+            </p>
+
+            <span class="service-arrow">↗</span>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ================= CREATIVE LAB ================= -->
+
+<section class="lab section">
+
+    <div class="section-number">
+        05 / CREATIVE LAB
+    </div>
+
+
+    <div class="lab-wrapper reveal">
+
+        <div class="lab-title">
+
+            <span>TEONS</span>
+
+            <h2>
+                EXPERIMENT<br>
+                IS PART OF<br>
+                THE PROCESS.
+            </h2>
+
+        </div>
+
+
+        <div class="lab-art">
+
+            <div class="lab-circle"></div>
+
+            <div class="lab-square"></div>
+
+            <div class="lab-line"></div>
+
+            <span class="lab-word">
+                CREATE
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about" class="about section">
+
+    <div class="section-header">
+
+        <div class="section-number">
+            06 / ABOUT TEONS
+        </div>
+
+    </div>
+
+
+    <div class="about-grid">
+
+        <h2 class="reveal">
+
+            SMALL TEAM.<br>
+            BIG <em>AMBITION.</em>
+
+        </h2>
+
+
+        <div class="about-copy reveal">
+
+            <p>
+                TEONS is an independent creative studio focused
+                on building brands that feel clear, relevant
+                and unmistakably themselves.
+            </p>
+
+            <p>
+                We believe good design starts with understanding —
+                not decoration. Every shape, typeface, image
+                and interaction has a reason.
+            </p>
+
+            <a href="#contact" class="text-link">
+                Let's build something →
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="stats">
+
+
+        <div class="stat reveal">
+
+            <strong>01+</strong>
+
+            <span>
+                YEARS<br>
+                EXPERIENCE
+            </span>
+
+        </div>
+
+
+        <div class="stat reveal">
+
+            <strong>∞</strong>
+
+            <span>
+                CREATIVE<br>
+                POSSIBILITIES
+            </span>
+
+        </div>
+
+
+        <div class="stat reveal">
+
+            <strong>24/7</strong>
+
+            <span>
+                CURIOUS<br>
+                MINDS
+            </span>
+
+        </div>
+
+
+        <div class="stat reveal">
+
+            <strong>01</strong>
+
+            <span>
+                PURPOSE:<br>
+                MAKE BETTER
+            </span>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section id="contact" class="contact section">
+
+    <div class="section-number">
+        07 / CONTACT
+    </div>
+
+
+    <div class="contact-content reveal">
+
+        <span>HAVE AN IDEA?</span>
+
+        <h2>
+            LET'S MAKE<br>
+            <em>IT REAL.</em>
+        </h2>
+
+
+        <a href="mailto:hello@teons.studio"
+           class="contact-email magnetic">
+
+            hello@teons.studio
+
+            <span>↗</span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-top">
+
+        <div class="footer-logo">
+            TEONS<span>®</span>
+        </div>
+
+        <p>
+            Creative digital agency building brands
+            for the next generation.
+        </p>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>© 2026 TEONS</span>
+
+        <span>INDIA / WORLDWIDE</span>
+
+        <div>
+
+            <a href="#">Instagram</a>
+
+            <a href="#">Behance</a>
+
+            <a href="#">LinkedIn</a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT START
+===================================================== -->
+
+<script>
+
+
+/* ================= CUSTOM CURSOR ================= */
+
+const cursor = document.querySelector(".cursor");
+const follower = document.querySelector(".cursor-follower");
+
+let mouseX = 0;
+let mouseY = 0;
+
+let followerX = 0;
+let followerY = 0;
+
+
+document.addEventListener("mousemove", (e) => {
+
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+});
+
+
+function animateCursor(){
+
+    if(cursor && follower){
+
+        cursor.style.left = mouseX + "px";
+        cursor.style.top = mouseY + "px";
+
+
+        followerX += (mouseX - followerX) * .12;
+        followerY += (mouseY - followerY) * .12;
+
+
+        follower.style.left = followerX + "px";
+        follower.style.top = followerY + "px";
+
+    }
+
+    requestAnimationFrame(animateCursor);
+
+}
+
+animateCursor();
+
+
+
+/* ================= HOVER EFFECT ================= */
+
+document
+.querySelectorAll("a, button, .project, .service")
+.forEach(el => {
+
+    el.addEventListener("mouseenter", () => {
+
+        document.body.classList.add("hovering");
+
+    });
+
+
+    el.addEventListener("mouseleave", () => {
+
+        document.body.classList.remove("hovering");
+
+    });
+
+});
+
+
+
+/* ================= MAGNETIC EFFECT ================= */
+
+document
+.querySelectorAll(".magnetic")
+.forEach(el => {
+
+    el.addEventListener("mousemove", e => {
+
+        const r = el.getBoundingClientRect();
+
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+
+
+        el.style.transform =
+            `translate(${(x-r.width/2)*.15}px,
+                       ${(y-r.height/2)*.15}px)`;
+
+    });
+
+
+    el.addEventListener("mouseleave", () => {
+
+        el.style.transform = "translate(0,0)";
+
+    });
+
+});
+
+
+
+/* ================= MOBILE MENU ================= */
+
+const menuButton =
+    document.querySelector(".menu-button");
+
+const mobileMenu =
+    document.querySelector(".mobile-menu");
+
+
+menuButton?.addEventListener("click", () => {
+
+    mobileMenu.classList.toggle("active");
+
+    document.body.classList.toggle("menu-open");
+
+});
+
+
+document
+.querySelectorAll(".mobile-links a")
+.forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        mobileMenu.classList.remove("active");
+
+        document.body.classList.remove("menu-open");
+
+    });
+
+});
+
+
+
+/* ================= SCROLL REVEAL ================= */
+
+const observer = new IntersectionObserver(
+
+    entries => {
+
+        entries.forEach(entry => {
+
+            if(entry.isIntersecting){
+
+                entry.target.classList.add("visible");
+
+                observer.unobserve(entry.target);
+
+            }
+
+        });
+
+    },
+
+    {
+        threshold:.12
+    }
+
+);
+
+
+document
+.querySelectorAll(".reveal")
+.forEach(el => {
+
+    observer.observe(el);
+
+});
+
+
+
+/* ================= LOGO ANIMATION ================= */
+
+document
+.querySelector(".logo")
+?.addEventListener("click", () => {
+
+    const mark =
+        document.querySelector(".logo-mark");
+
+    const word =
+        document.querySelector(".logo-word");
+
+
+    mark.style.animation = "none";
+
+    word.style.animation = "none";
+
+
+    void mark.offsetWidth;
+
+
+    mark.style.animation =
+        "logoIntro 1s cubic-bezier(.2,.8,.2,1) both";
+
+
+    word.style.animation =
+        "logoWordIntro .8s .35s cubic-bezier(.2,.8,.2,1) both";
+
+});
+
+
+
+/* ================= SMOOTH ANCHOR SCROLL ================= */
+
+document
+.querySelectorAll('a[href^="#"]')
+.forEach(anchor => {
+
+    anchor.addEventListener("click", function(e){
+
+        const target =
+            document.querySelector(
+                this.getAttribute("href")
+            );
+
+
+        if(!target) return;
+
+
+        e.preventDefault();
+
+
+        target.scrollIntoView({
+            behavior:"smooth"
+        });
+
+    });
+
+});
+
+
+
+/* ================= CURRENT YEAR ================= */
+
+const year = new Date().getFullYear();
+
+
+document
+.querySelectorAll(".footer-bottom span:first-child")
+.forEach(el => {
+
+    el.textContent =
+        `© ${year} TEONS`;
+
+});
+
+
+</script>
+
+<!-- =====================================================
+     JAVASCRIPT END
+===================================================== -->
+
+</body>
+</html>
